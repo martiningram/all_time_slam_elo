@@ -114,6 +114,7 @@ def summarise(match_df):
             "sets_loser": sets_won[match_loser],
             "games_winner": total_games[match_winner],
             "games_loser": total_games[match_loser],
+            "surface": row.surface,
         }
     )
 
@@ -123,8 +124,6 @@ def summarise(match_df):
 def turn_into_summary_df(tourney_df, tour="Mens"):
 
     # TODO: This uses some horrible pandas. Improve.
-
-    tourney_df = add_derived_fields(tourney_df)
 
     subset = tourney_df[tourney_df["tour"] == tour]
 
@@ -151,9 +150,43 @@ def turn_into_summary_df(tourney_df, tour="Mens"):
         "loser",
         "sets_loser",
         "sets_winner",
+        "surface",
         "winner",
     ]
 
     summarised = summarised.drop(columns="none")
 
+    summarised["tourney_name"] = tourney_df["tourney_name"].iloc[0]
+
+    # TODO: Check whether this was always so.
+    summarised["tourney_order"] = summarised["tourney_name"].replace(
+        {"ausopen": 1, "frenchopen": 2, "wimbledon": 3, "usopen": 4}
+    )
+
     return summarised.sort_values(["year", "round_number"])
+
+
+def infer_surfaces(tourney_name, years):
+    """
+    Surface research:
+    * US Open was on clay from 1975 to 1977
+    * US Open was on grass from 1881 to 1974
+    * FO has been clay since 1891
+    * AO was on grass between 1905 and 1987
+    (see https://en.wikipedia.org/wiki/Tennis_court)
+    """
+
+    if tourney_name == "ausopen":
+        surface_names = np.select([years < 1987, years >= 1988], ["grass", "hard"])
+    elif tourney_name == "wimbledon":
+        surface_names = np.repeat("grass", years.shape[0])
+    elif tourney_name == "frenchopen":
+        surface_names = np.repeat("clay", years.shape[0])
+    else:
+        assert tourney_name == "usopen"
+        surface_names = np.select(
+            [years <= 1974, (years >= 1975) & (years <= 1977), (years >= 1978)],
+            ["grass", "clay", "hard"],
+        )
+
+    return surface_names
