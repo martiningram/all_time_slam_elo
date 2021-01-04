@@ -72,6 +72,9 @@ def plot_completeness(tourney_df, tour):
 
 
 def summarise(match_df):
+
+    # TODO: This function needs more testing!
+
     def make_nan_row():
 
         return {
@@ -86,8 +89,6 @@ def summarise(match_df):
                 "surface",
             ]
         }
-
-    # TODO: This isn't really great, but it half-works, perhaps
 
     games_won = defaultdict(dict)
 
@@ -136,8 +137,6 @@ def summarise(match_df):
 
 
 def turn_into_summary_df(tourney_df, tour="Mens"):
-
-    # TODO: This uses some horrible pandas. Improve.
 
     subset = tourney_df[tourney_df["tour"] == tour]
 
