@@ -29,8 +29,7 @@ for cur_tourney, cur_df in tourney_dfs.items():
     tourney_dfs[cur_tourney] = cur_df
 
 for cur_tourney, cur_df in tqdm(tourney_dfs.items()):
-    # TODO: Find out what went wrong on Women's tour
-    for cur_tour in ["Mens"]:
+    for cur_tour in ["Womens"]:
         summarised = turn_into_summary_df(cur_df, tour=cur_tour)
         summarised.to_csv(
             os.path.join(output_dir, f"{cur_tourney}_{cur_tour.lower()}.csv")

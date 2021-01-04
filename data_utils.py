@@ -72,6 +72,20 @@ def plot_completeness(tourney_df, tour):
 
 
 def summarise(match_df):
+    def make_nan_row():
+
+        return {
+            x: np.nan
+            for x in [
+                "winner",
+                "loser",
+                "sets_winner",
+                "sets_loser",
+                "games_winner",
+                "games_loser",
+                "surface",
+            ]
+        }
 
     # TODO: This isn't really great, but it half-works, perhaps
 
@@ -84,7 +98,7 @@ def summarise(match_df):
     try:
         p1, p2 = np.unique(match_df["player"].values)
     except ValueError:
-        return pd.Series(np.nan)
+        return pd.Series(make_nan_row())
 
     sets_won = defaultdict(lambda: 0)
     total_games = defaultdict(lambda: 0)
@@ -98,7 +112,7 @@ def summarise(match_df):
             total_games[p1] += cur_p1_games
             total_games[p2] += cur_p2_games
         except KeyError:
-            return pd.Series(np.nan)
+            return pd.Series(make_nan_row())
 
         sets_won[p1] += int(cur_p1_games > cur_p2_games)
         sets_won[p2] += int(cur_p1_games < cur_p2_games)
@@ -133,28 +147,7 @@ def turn_into_summary_df(tourney_df, tour="Mens"):
         .apply(summarise)
     )
 
-    summarised = (
-        info.reset_index()
-        .pivot(index=["match", "year", "round", "round_number"], columns="level_4")
-        .reset_index()
-    )
-
-    summarised.columns = [
-        "match",
-        "year",
-        "round",
-        "round_number",
-        "none",
-        "games_loser",
-        "games_winner",
-        "loser",
-        "sets_loser",
-        "sets_winner",
-        "surface",
-        "winner",
-    ]
-
-    summarised = summarised.drop(columns="none")
+    summarised = info.reset_index()
 
     summarised["tourney_name"] = tourney_df["tourney_name"].iloc[0]
 
