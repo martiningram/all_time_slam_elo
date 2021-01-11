@@ -5,9 +5,11 @@ import pandas as pd
 from os.path import join, splitext
 
 
-def get_data(sackmann_dir, tour="atp", keep_davis_cup=False, discard_retirements=True):
+def get_data(
+    tennis_abstract_dir, tour="atp", keep_davis_cup=False, discard_retirements=True
+):
 
-    all_csvs = glob(join(sackmann_dir, f"*{tour}_matches_????.csv"))
+    all_csvs = glob(join(tennis_abstract_dir, f"*{tour}_matches_????.csv"))
     all_csvs = sorted(all_csvs, key=lambda x: int(splitext(x)[0][-4:]))
 
     levels_to_drop = ["C", "S"]
@@ -107,10 +109,10 @@ def compute_game_margins(string_scores):
     return margins
 
 
-def get_player_info(sackmann_dir, tour="atp"):
+def get_player_info(tennis_abstract_dir, tour="atp"):
 
     player_info = pd.read_csv(
-        join(sackmann_dir, f"{tour}_players.csv"),
+        join(tennis_abstract_dir, f"{tour}_players.csv"),
         header=None,
         names=[
             "ID",
