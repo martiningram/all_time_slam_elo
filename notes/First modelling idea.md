@@ -110,3 +110,47 @@ The prior mean seems to be generally rising over time, which is maybe intuitive:
 The prior standard deviation is pretty interesting, starting out large (i.e. a large range of skills) and then dropping dramatically until about 1980, since when it's been fairly flat. I find the steep decline of the AO here pretty intriguing, from about 1951 onwards. I wonder if that's when travel started to become more affordable, or something?
 
 The draw size coefficients end up being $\beta_\mu = -0.4$ and $\beta_\sigma = 0.09$. So that makes sense I think: bigger draw, lower prior mean and larger range of skills.
+
+What about the player skills? Again, given the lack of convergence, probably shouldn't look too much. But here are the top 10 highest skills:
+
+|                         | mean  | sd    |
+| ----------------------- | ----- | ----- |
+| Don Budge               | 5.178 | 0.644 |
+| Bobby Riggs             | 4.882 | 0.691 |
+| Bill Tilden Ii          | 4.877 | 0.542 |
+| Frederick Ted Schroeder | 4.839 | 0.715 |
+| Jack Kramer             | 4.769 | 0.659 |
+| Jean Rene Lacoste       | 4.719 | 0.553 |
+| Joe Hunt                | 4.655 | 0.729 |
+| Bill Johnston           | 4.590 | 0.582 |
+| Henri Jean Cochet       | 4.537 | 0.543 |
+| Novak Djokovic          | 4.517 | 0.526 |
+
+So some of these old players do extremely well! _But_, I was curious how things would change if instead, we compute a z-score. The idea here is that back in the 20s, where the range of skills was really high, someone with a rating of 4 would be much less surprising than now, where everyone's skills are thought to be similar. Here, I compute the z-score by subtracting the player's prior mean (a function of which year and tournament they played, as discussed), and dividing by their prior standard deviation. The result should tell us something about how much better a player is than would have been expected from when and where they started.
+
+The result is then:
+
+```
+Bill Tilden Ii                 3.50
+Roger Federer                  3.45
+Bjorn Borg                     3.44
+Rafael Nadal                   3.34
+Bill Johnston                  3.19
+Fred Perry                     3.13
+Novak Djokovic                 3.12
+Jean Rene Lacoste              3.11
+Maurice Evans Mcloughlin       3.09
+Henri Jean Cochet              2.99
+Ivan Lendl                     2.96
+Jaroslav Drobny                2.83
+Pete Sampras                   2.81
+John McEnroe                   2.78
+Andy Murray                    2.76
+Jimmy Connors                  2.72
+Lestocq Robert Erskine         2.71
+Arthur Ashe                    2.68
+Don Budge                      2.67
+Jean Laurent Robert Borotra    2.66
+```
+
+I think that's sort of a fun list. But this is very experimental and only a first idea.
