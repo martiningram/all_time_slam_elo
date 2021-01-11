@@ -109,3 +109,4 @@ The prior mean seems to be generally rising over time, which is maybe intuitive:
 
 The prior standard deviation is pretty interesting, starting out large (i.e. a large range of skills) and then dropping dramatically until about 1980, since when it's been fairly flat. I find the steep decline of the AO here pretty intriguing, from about 1951 onwards. I wonder if that's when travel started to become more affordable, or something?
 
+The draw size coefficients end up being $\beta_\mu = -0.4$ and $\beta_\sigma = 0.09$. So that makes sense I think: bigger draw, lower prior mean and larger range of skills.
