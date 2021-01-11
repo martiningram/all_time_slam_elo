@@ -182,3 +182,14 @@ def infer_surfaces(tourney_name, years):
         )
 
     return surface_names
+
+
+def load_and_combine_data(path, tour):
+
+    all_dfs = glob(os.path.join(path, f"*_{tour}*.csv"))
+    all_loaded = pd.concat([pd.read_csv(x, index_col=0) for x in all_dfs])
+    all_loaded = all_loaded.sort_values(
+        ["year", "tourney_order", "round_number", "match"]
+    )
+
+    return all_loaded
