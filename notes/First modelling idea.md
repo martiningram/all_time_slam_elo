@@ -126,7 +126,7 @@ What about the player skills? Again, given the lack of convergence, probably sho
 | Henri Jean Cochet       | 4.537 | 0.543 |
 | Novak Djokovic          | 4.517 | 0.526 |
 
-So some of these old players do extremely well! _But_, I was curious how things would change if instead, we compute a z-score. The idea here is that back in the 20s, where the range of skills was really high, someone with a rating of 4 would be much less surprising than now, where everyone's skills are thought to be similar. Here, I compute the z-score by subtracting the player's prior mean (a function of which year and tournament they played, as discussed), and dividing by their prior standard deviation. The result should tell us something about how much better a player is than would have been expected from when and where they started.
+So some of these old players do extremely well! _But_, I was curious how things would change if instead, we compute a z-score. The idea here is that back in the 20s, where the range of skills was really high, someone with a rating of 4 would be much less surprising than now, where the range of skills is much smaller. Here, I compute the z-score by subtracting the player's prior mean (a function of which year and tournament they played, as discussed), and dividing by their prior standard deviation. The result should tell us something about how much better a player is than would have been expected from when and where they started.
 
 The result is then:
 
